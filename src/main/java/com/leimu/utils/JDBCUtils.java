@@ -67,14 +67,19 @@ public class JDBCUtils {
             e.printStackTrace();
         }
         try {
+            table = table.trim();
+            if (table.contains(" ")){
+                logger.error("表 "+table+" 一个单词，请检查");
+                return;
+            }
             PreparedStatement preparedStatement = connection.prepareStatement("desc " + table);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
 
             }
-        } catch (SQLException throwables) {
-            logger.error(throwables.getMessage(),throwables);
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            logger.error(e.getMessage(),e);
+            e.printStackTrace();
         }
 
     }
