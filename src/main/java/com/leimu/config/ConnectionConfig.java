@@ -1,5 +1,10 @@
 package com.leimu.config;
 
+/**
+ * 数据库的基本连接
+ *
+ * @author haiqinhuang
+ */
 public class ConnectionConfig {
 
     public static String JdbcDriver;
