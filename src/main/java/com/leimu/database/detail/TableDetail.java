@@ -1,5 +1,6 @@
 package com.leimu.database.detail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,5 +48,12 @@ public class TableDetail {
 
     public void setTableType(String tableType) {
         this.tableType = tableType;
+    }
+
+    public void addColumnDetailInThis(ColumnDetail columnDetail){
+        if (this.columnDetails==null){
+            this.columnDetails = new ArrayList<>();
+        }
+        this.getColumnDetails().add(columnDetail);
     }
 }

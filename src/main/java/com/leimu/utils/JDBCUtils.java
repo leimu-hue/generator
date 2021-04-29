@@ -3,11 +3,14 @@ package com.leimu.utils;
 import com.leimu.config.ConnectionConfig;
 import com.leimu.constant.Constant;
 import com.leimu.constant.TableConstant;
+import com.leimu.database.detail.ColumnDetail;
 import com.leimu.database.detail.TableDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCUtils {
 
@@ -56,6 +59,55 @@ public class JDBCUtils {
             tableDetail.setTableType(tables.getString("TABLE_TYPE"));
             tableConstant.addTableDetailsInThis(tableDetail);
         }
+        return tableConstant;
+    }
+
+    /**
+     * 获取数据表的所有字段信息
+     * @param tableConstant 存放所有存储数据的容器
+     * @param type 表示数据库类型
+     * @return
+     * @throws Exception
+     */
+    public static TableConstant showAllColumnInTable(TableConstant tableConstant,String type)throws Exception{
+        Connection connection = getConnection();
+        DatabaseMetaData metaData = connection.getMetaData();
+        for (TableDetail tableDetail : tableConstant.getTableDetails()) {
+            ResultSet columns;
+            ResultSet primaryKeys;
+            //根据数据库种类来虎丘字段数据和主键数据
+            if ("oracle".equalsIgnoreCase(type)) {
+                columns = metaData.getColumns(null, metaData.getUserName().toUpperCase(), tableDetail.getTableName(), null);
+                primaryKeys = metaData.getPrimaryKeys(null,metaData.getUserName().toUpperCase(),tableDetail.getTableName());
+            }else{
+                columns = metaData.getColumns(null,null,tableDetail.getTableName(),null);
+                primaryKeys = metaData.getPrimaryKeys(null,null,tableDetail.getTableName());
+            }
+            //存放主键名字
+            List<String> primaryNames = new ArrayList<>();
+            while (primaryKeys.next()){
+                primaryNames.add(primaryKeys.getString("COLUMN_NAME").toLowerCase());
+            }
+
+            ColumnDetail columnDetail;
+            while (columns.next()) {
+                columnDetail = new ColumnDetail();
+                String column_name = columns.getString("COLUMN_NAME");
+                boolean contains = primaryNames.contains(column_name.toLowerCase());
+                String remarks = columns.getString("REMARKS");
+                String is_nullable = columns.getString("IS_NULLABLE");
+                String type_name = columns.getString("TYPE_NAME");
+
+                columnDetail.setColumnName(column_name);
+                columnDetail.setColumnType(type_name);
+                columnDetail.setColumnComment(remarks);
+                columnDetail.setColumnIsPrimaryKey(contains);
+                columnDetail.setColumnIsNull("YES".equalsIgnoreCase(is_nullable)?true:false);
+
+                tableDetail.addColumnDetailInThis(columnDetail);
+            }
+        }
+
         return tableConstant;
     }
 

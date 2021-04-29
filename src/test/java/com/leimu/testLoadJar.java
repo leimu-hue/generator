@@ -18,7 +18,7 @@ public class testLoadJar {
      * 进行测试
      */
     @Test
-    public void testLoadJar() {
+    public void testLoadJar1() {
         try {
             LoadJar.loadJar(ConstantTest.test);
         } catch (NoSuchMethodException e) {
@@ -47,5 +47,25 @@ public class testLoadJar {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testAllColumns(){
+        ConnectionConfig.jdbcConnection = "jdbc:mysql://127.0.0.1:3306/sys?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
+        ConnectionConfig.JdbcDriver = "com.mysql.cj.jdbc.Driver";
+        ConnectionConfig.username = "root";
+        ConnectionConfig.password = "123456";
+        try {
+            LoadJar.loadJar(ConstantTest.test);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            TableConstant tableConstant = JDBCUtils.showAllTables();
+            JDBCUtils.showAllColumnInTable(tableConstant,"mysql");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
