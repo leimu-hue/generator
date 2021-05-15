@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <outputFilePath>src/main/java/com/leimu</outputFilePath>
+
+    <author>Me</author>
+
+
+    <jarLocation>D:\BaiduNetdiskDownload\mavenData\mysql\mysql-connector-java\8.0.21\mysql-connector-java-8.0.21.jar</jarLocation>
+
+    <databaseSource>
+        <driver>jdbc:mysql://127.0.0.1:3306/account?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;eroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</driver>
+        <connection>com.mysql.cj.jdbc.Driver</connection>
+        <username>root</username>
+        <password>123456</password>
+    </databaseSource>
+
+</configuration>

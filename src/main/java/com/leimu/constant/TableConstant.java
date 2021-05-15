@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * 存放数据库表信息
  */
-
 public class TableConstant {
 
     private List<TableDetail> tableDetails;

@@ -43,14 +43,14 @@ public class testLoadJar {
             e.printStackTrace();
         }
         try {
-             JDBCUtils.showAllTables();
+            JDBCUtils.showAllTables();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testAllColumns(){
+    public void testAllColumns() {
         ConnectionConfig.jdbcConnection = "jdbc:mysql://127.0.0.1:3306/sys?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
         ConnectionConfig.JdbcDriver = "com.mysql.cj.jdbc.Driver";
         ConnectionConfig.username = "root";
@@ -62,10 +62,31 @@ public class testLoadJar {
         }
         try {
             TableConstant tableConstant = JDBCUtils.showAllTables();
-            JDBCUtils.showAllColumnInTable(tableConstant,"mysql");
+            JDBCUtils.showAllColumnInTable(tableConstant, "mysql");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void getAllTableAndColumn() {
+        ConnectionConfig.jdbcConnection = "jdbc:mysql://127.0.0.1:3306/account?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
+        ConnectionConfig.JdbcDriver = "com.mysql.cj.jdbc.Driver";
+        ConnectionConfig.username = "root";
+        ConnectionConfig.password = "123456";
+        try {
+            LoadJar.loadJar(ConstantTest.test);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            TableConstant tableConstant = JDBCUtils.showAllTables();
+            tableConstant = JDBCUtils.showAllColumnInTable(tableConstant, "mysql");
+
+            System.out.println(tableConstant);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
