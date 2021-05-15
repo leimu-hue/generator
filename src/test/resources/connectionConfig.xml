@@ -2,7 +2,9 @@
 
 <configuration>
 
-    <outputFilePath>src/main/java/com/leimu</outputFilePath>
+    <outputFilePath>src/main/java</outputFilePath>
+
+    <basePackage>com.leimu</basePackage>
 
     <author>Me</author>
 

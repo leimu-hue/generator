@@ -5,6 +5,7 @@ import com.leimu.constant.Constant;
 import com.leimu.constant.TableConstant;
 import com.leimu.database.detail.ColumnDetail;
 import com.leimu.database.detail.TableDetail;
+import com.leimu.enumtype.JdbcTypeToJavaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +61,8 @@ public class JDBCUtils {
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet tables = metaData.getTables(catalog, schema, null, Constant.types);
         TableDetail tableDetail;
+        //初始化list列表
+        tableConstant.setTableDetails(new ArrayList<>());
         //进行循环获取对应的表
         while (tables.next()) {
             tableDetail = new TableDetail();
@@ -83,22 +86,20 @@ public class JDBCUtils {
         Connection connection = getConnection();
         DatabaseMetaData metaData = connection.getMetaData();
         for (TableDetail tableDetail : tableConstant.getTableDetails()) {
-            ResultSet columns;
-            ResultSet primaryKeys;
-            //根据数据库种类来虎丘字段数据和主键数据
-            if ("oracle".equalsIgnoreCase(type)) {
-                columns = metaData.getColumns(null, metaData.getUserName().toUpperCase(), tableDetail.getTableName(), null);
-                primaryKeys = metaData.getPrimaryKeys(null, metaData.getUserName().toUpperCase(), tableDetail.getTableName());
-            } else {
-                columns = metaData.getColumns(null, null, tableDetail.getTableName(), null);
-                primaryKeys = metaData.getPrimaryKeys(null, null, tableDetail.getTableName());
-            }
+            //初始化列表
+            tableDetail.setColumnDetails(new ArrayList<>());
+            //获取基础设置
+            String catalog = connection.getCatalog();
+            String schema = connection.getSchema();
+            //获取列名和主键名
+            ResultSet columns = metaData.getColumns(catalog, schema, tableDetail.getTableName(), null);
+            ResultSet primaryKeys = metaData.getPrimaryKeys(catalog, schema, tableDetail.getTableName());
             //存放主键名字
             List<String> primaryNames = new ArrayList<>();
             while (primaryKeys.next()) {
                 primaryNames.add(primaryKeys.getString("COLUMN_NAME").toLowerCase());
             }
-
+            //开始初始化字段值
             ColumnDetail columnDetail;
             while (columns.next()) {
                 columnDetail = new ColumnDetail();
@@ -113,6 +114,7 @@ public class JDBCUtils {
                 columnDetail.setColumnComment(remarks);
                 columnDetail.setColumnIsPrimaryKey(contains);
                 columnDetail.setColumnIsNull("YES".equalsIgnoreCase(is_nullable));
+                columnDetail.setColumnOfJavaType(JdbcTypeToJavaType.toConvertJdbcTypeToJavaType(type_name));
 
                 tableDetail.addColumnDetailInThis(columnDetail);
             }

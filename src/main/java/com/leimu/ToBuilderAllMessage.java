@@ -8,7 +8,11 @@ import com.leimu.io.ReadXmlFileToConfig;
 import com.leimu.utils.JDBCUtils;
 import com.leimu.utils.LoadJar;
 import com.leimu.utils.StringUtils;
+import com.leimu.utils.ToGeneratorBaseMessageUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ToBuilderAllMessage {
@@ -37,6 +41,14 @@ public class ToBuilderAllMessage {
         if (Objects.isNull(fileBuilderOfConfig)) {
             ReadXmlFileToConfig.createDocument(this.configXmlPath);
             this.fileBuilderOfConfig = ReadXmlFileToConfig.getConfigByDocument();
+            //处理路径
+            String path = System.getProperty("user.dir")+ File.separator+ (fileBuilderOfConfig.getOutputFilePath().trim().startsWith("/")?
+                    (fileBuilderOfConfig.getOutputFilePath().substring(1)):fileBuilderOfConfig.getOutputFilePath());
+            File file = new File(path);
+            if (!file.exists()){
+                throw new FileNotFoundException(file.getAbsolutePath()+"不存在，请重新填写");
+            }
+            fileBuilderOfConfig.setOutputFilePath(path);
         }
         //配置数据库参数
         ReadXmlFileToConfig.getConnectionConfigByDocument();
@@ -45,8 +57,10 @@ public class ToBuilderAllMessage {
         //加载数据库
         TableConstant tableConstant = JDBCUtils.showAllTables();
         tableConstant = JDBCUtils.showAllColumnInTable(tableConstant, JDBCUtils.getDatabaseType());
+        //将需要生成的信息放入hashmap
+        String content = ToGeneratorBaseMessageUtils.toGeneratorBaseMessage(fileBuilderOfConfig);
         //开始生成文件
-        GeneratorFileToTargetPath.toGenerator(tableConstant);
+        GeneratorFileToTargetPath.toGenerator(tableConstant,fileBuilderOfConfig,content);
     }
 
 }

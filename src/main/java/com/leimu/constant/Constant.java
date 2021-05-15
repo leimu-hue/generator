@@ -22,6 +22,8 @@ public class Constant {
 
     public static final String password = "password";
 
+    public static final String basePackage = "basePackage";
+
     public static String[] types = new String[]{"TABLE"};
 
 }

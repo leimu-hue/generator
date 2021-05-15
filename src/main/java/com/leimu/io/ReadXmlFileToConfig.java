@@ -77,6 +77,8 @@ public class ReadXmlFileToConfig {
                 ConnectionConfig.jarLocation = willHandlerNode.getTextContent();
             } else if (Constant.databaseSource.equalsIgnoreCase(willHandlerNode.getNodeName())) {
                 ReadXmlFileToConfig.databaseSource = willHandlerNode;
+            } else if (Constant.basePackage.equalsIgnoreCase(willHandlerNode.getNodeName())){
+                fileBuilderOfConfig.setBasePackage(willHandlerNode.getTextContent().trim());
             }
         }
         if (StringUtils.isEmpty(fileBuilderOfConfig.getOutputFilePath())) {

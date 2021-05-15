@@ -1,7 +1,7 @@
 package com.leimu.enumtype;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
+import java.sql.*;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -20,17 +20,22 @@ public enum JdbcTypeToJavaType {
     FLOAT(Float.class, "FLOAT(\\(.*?\\))*"),
     DOUBLE(Double.class, "DOUBLE(\\(.*?\\))*"),
     NUMERIC(BigDecimal.class, "NUMERIC"),
-    STRING_1(String.class, "CHAR(\\(.*?\\))*"),
+    CHAR(String.class, "CHAR(\\(.*?\\))*"),
     BOOLEAN(Boolean.class, "BIT"),
-    STRING_2(String.class, "VARCHAR(\\(.*?\\))*"),
+    VARCHAR(String.class, "VARCHAR(\\(.*?\\))*"),
     DATE(Date.class, "DATE"),
-    TIME(Date.class, "TIME"),
+    TIME(Time.class, "TIME"),
     DATETIME(Date.class, "DATETIME"),
-    TIMESTAMP(Date.class, "TIMESTAMP"),
+    TIMESTAMP(Timestamp.class, "TIMESTAMP"),
+    BINARY(Byte[].class,"BINARY"),
+    LINGERINGLY(Byte[].class,"LONGVARBINARY"),
+    ARRAY(Array.class,"ARRAY"),
+    STRUCT(Struct.class,"STRUCT"),
     VARBINARY(Byte[].class, "VARBINARY"),
-    VARBINARY_1(Byte[].class, "BLOB"),
-    CLOB(String.class, "CLOB"),
-    BLOB(Blob.class, "BLOB");
+    CLOB(Clob.class, "CLOB"),
+    BLOB(Blob.class, "BLOB"),
+    REF(Ref.class,"REF"),
+    YEAR(Date.class,"YEAR");
 
 
     private final Class<?> javaType;

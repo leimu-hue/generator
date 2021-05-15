@@ -19,6 +19,11 @@ public class FileBuilderOfConfig {
     private String author;
 
     /**
+     * 包名
+     */
+    private String basePackage;
+
+    /**
      * 需要被过滤的table
      * 以regex形式填充
      */
@@ -53,6 +58,14 @@ public class FileBuilderOfConfig {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getBasePackage() {
+        return basePackage;
+    }
+
+    public void setBasePackage(String basePackage) {
+        this.basePackage = basePackage;
     }
 
     public List<String> addFilterTablesThings(String filterTables) {
