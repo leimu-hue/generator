@@ -2,9 +2,16 @@ package com.leimu.io;
 
 import com.leimu.config.FileBuilderOfConfig;
 import com.leimu.constant.TableConstant;
+import com.leimu.database.detail.ColumnDetail;
 import com.leimu.database.detail.TableDetail;
+import com.leimu.utils.FileContentGeneratorUtils;
+import com.leimu.utils.FileWriteUtils;
+import com.leimu.utils.StringUtils;
+import sun.net.www.protocol.file.FileURLConnection;
 
-import java.util.HashMap;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneratorFileToTargetPath {
@@ -19,6 +26,8 @@ public class GeneratorFileToTargetPath {
 
     private static String outputFilePath;
 
+    private static FileBuilderOfConfig fileBuilderOfConfig;
+
     /**
      * 开始准备生成文件
      *
@@ -26,10 +35,16 @@ public class GeneratorFileToTargetPath {
      */
     public static void toGenerator(TableConstant tableConstants,FileBuilderOfConfig fileBuilderOfConfig,String content) {
         outputFilePath = fileBuilderOfConfig.getOutputFilePath();
+        GeneratorFileToTargetPath.fileBuilderOfConfig = fileBuilderOfConfig;
         List<TableDetail> tableDetails = tableConstants.getTableDetails();
         tableDetails.forEach(o -> {
             //生成实体类
-            generatorEntity(o);
+            try {
+                generatorEntity(o);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(0);
+            }
             //生成mapper层
             generatorMapper(o);
             //生成mapper.xml文件
@@ -46,18 +61,49 @@ public class GeneratorFileToTargetPath {
      *
      * @param tableDetail 需要生成的内容
      */
-    private static void generatorEntity(TableDetail tableDetail) {
-        String tableName = tableDetail.getTableName();
-        String[] tableNameSplit = tableName.split("_");
-        StringBuilder content = new StringBuilder();
-        for (String temp : tableNameSplit){
-            String lowerCase = temp.toLowerCase();
-            content.append(lowerCase.substring(0,1).toUpperCase() + lowerCase.substring(1));
+    private static void generatorEntity(TableDetail tableDetail) throws IOException {
+        String tableName = StringUtils.toConvertName(tableDetail.getTableName());
+        String basePackage = fileBuilderOfConfig.getBasePackage();
+        //设置路径
+        String path = FileWriteUtils.createPath(outputFilePath, basePackage + ".entity");
+        //设置输出流路径
+        FileWriteUtils.setOutputPath(path,tableName+".java");
+        BufferedWriter write = FileWriteUtils.getWrite();
+        //首先写入package内容
+        if (!StringUtils.isEmpty(basePackage)){
+            String packageContent = FileContentGeneratorUtils.generatorPackageContent(basePackage + ".entity");
+            entityOfPackage = packageContent.replace("package ","");
+            FileWriteUtils.toWriteLineContentInFile(write,packageContent);
         }
-        tableName = content.toString();
-
-
-
+        //其次生成import的内容
+        if (tableDetail.getColumnDetails().size()>0){
+            String importContent = FileContentGeneratorUtils.generatorImportContent(tableDetail.getColumnDetails());
+            FileWriteUtils.toWriteLineContentInFile(write,importContent);
+        }
+        //生成文件内容
+        String contentEntity = "public class "+tableName + "{";
+        FileWriteUtils.toWriteLineContentInFile(write,contentEntity);
+        //输出字段
+        List<String> setAndGetGenerator = new ArrayList<>();
+        for (ColumnDetail columnDetail : tableDetail.getColumnDetails()){
+            String javaTypeName = columnDetail.getColumnOfJavaType().getSimpleName();
+            String javaName = StringUtils.toConvertName(columnDetail.getColumnName());
+            setAndGetGenerator.add(javaTypeName + "_" + javaName);
+            String fieldContent = FileContentGeneratorUtils.generatorFieldContent(javaTypeName, javaName);
+            FileWriteUtils.toWriteLineContentInFile(write,fieldContent);
+        }
+        //输出字段的set和get方法
+        for (String method : setAndGetGenerator){
+            String type = method.split("_")[0];
+            String name = method.split("_")[1];
+            FileContentGeneratorUtils.generatorGetMethodContent(write,
+                    "public",type,name);
+            FileContentGeneratorUtils.generatorSetMethodContent(write,
+                    "public",type,name);
+        }
+        FileWriteUtils.toWriteLineContentInFile(write,"}");
+        write.flush();
+        write.close();
     }
 
     /**

@@ -6,13 +6,12 @@ import com.leimu.constant.TableConstant;
 import com.leimu.io.GeneratorFileToTargetPath;
 import com.leimu.io.ReadXmlFileToConfig;
 import com.leimu.utils.JDBCUtils;
-import com.leimu.utils.LoadJar;
+import com.leimu.utils.LoadJarUtils;
 import com.leimu.utils.StringUtils;
 import com.leimu.utils.ToGeneratorBaseMessageUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class ToBuilderAllMessage {
@@ -45,15 +44,16 @@ public class ToBuilderAllMessage {
             String path = System.getProperty("user.dir")+ File.separator+ (fileBuilderOfConfig.getOutputFilePath().trim().startsWith("/")?
                     (fileBuilderOfConfig.getOutputFilePath().substring(1)):fileBuilderOfConfig.getOutputFilePath());
             File file = new File(path);
-            if (!file.exists()){
-                throw new FileNotFoundException(file.getAbsolutePath()+"不存在，请重新填写");
+            //是文件夹，并且不存在 则创建
+            if (file.isDirectory() && !file.exists()){
+                file.mkdirs();
             }
             fileBuilderOfConfig.setOutputFilePath(path);
         }
         //配置数据库参数
         ReadXmlFileToConfig.getConnectionConfigByDocument();
         //加载外部jar包
-        LoadJar.loadJar(ConnectionConfig.jarLocation);
+        LoadJarUtils.loadJar(ConnectionConfig.jarLocation);
         //加载数据库
         TableConstant tableConstant = JDBCUtils.showAllTables();
         tableConstant = JDBCUtils.showAllColumnInTable(tableConstant, JDBCUtils.getDatabaseType());

@@ -3,10 +3,9 @@ package com.leimu;
 import com.leimu.config.ConnectionConfig;
 import com.leimu.constant.ConstantTest;
 import com.leimu.constant.TableConstant;
-import com.leimu.database.detail.ColumnDetail;
 import com.leimu.database.detail.TableDetail;
 import com.leimu.utils.JDBCUtils;
-import com.leimu.utils.LoadJar;
+import com.leimu.utils.LoadJarUtils;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  *
  * @author haiqinhuang
  */
-public class testLoadJar {
+public class testLoadJarUtils {
 
     /**
      * 进行测试
@@ -24,7 +23,7 @@ public class testLoadJar {
     @Test
     public void testLoadJar1() {
         try {
-            LoadJar.loadJar(ConstantTest.test);
+            LoadJarUtils.loadJar(ConstantTest.test);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -42,7 +41,7 @@ public class testLoadJar {
         ConnectionConfig.username = "root";
         ConnectionConfig.password = "123456";
         try {
-            LoadJar.loadJar(ConstantTest.test);
+            LoadJarUtils.loadJar(ConstantTest.test);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -60,7 +59,7 @@ public class testLoadJar {
         ConnectionConfig.username = "root";
         ConnectionConfig.password = "123456";
         try {
-            LoadJar.loadJar(ConstantTest.test);
+            LoadJarUtils.loadJar(ConstantTest.test);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -80,7 +79,7 @@ public class testLoadJar {
         ConnectionConfig.username = "root";
         ConnectionConfig.password = "123456";
         try {
-            LoadJar.loadJar(ConstantTest.test);
+            LoadJarUtils.loadJar(ConstantTest.test);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -104,7 +103,7 @@ public class testLoadJar {
         ConnectionConfig.username = "root";
         ConnectionConfig.password = "123456";
         try {
-            LoadJar.loadJar(ConstantTest.test);
+            LoadJarUtils.loadJar(ConstantTest.test);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

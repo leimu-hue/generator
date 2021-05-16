@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-public class LoadJar {
+public class LoadJarUtils {
 
     /**
      * 动态加载jar包

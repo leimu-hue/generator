@@ -12,8 +12,8 @@
     <jarLocation>D:\BaiduNetdiskDownload\mavenData\mysql\mysql-connector-java\8.0.21\mysql-connector-java-8.0.21.jar</jarLocation>
 
     <databaseSource>
-        <driver>jdbc:mysql://127.0.0.1:3306/account?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;eroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</driver>
-        <connection>com.mysql.cj.jdbc.Driver</connection>
+        <connection>jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;eroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</connection>
+        <driver>com.mysql.cj.jdbc.Driver</driver>
         <username>root</username>
         <password>123456</password>
     </databaseSource>
