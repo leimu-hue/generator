@@ -6,10 +6,11 @@ public class ToGeneratorBaseMessageUtils {
 
     /**
      * 生成每一个最基本的注解
+     *
      * @param fileBuilderOfConfig
      * @return
      */
-    public static String toGeneratorBaseMessage(FileBuilderOfConfig fileBuilderOfConfig){
+    public static String toGeneratorBaseMessage(FileBuilderOfConfig fileBuilderOfConfig) {
         return "";
     }
 

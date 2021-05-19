@@ -1,7 +1,5 @@
 package com.leimu.database.detail;
 
-import com.leimu.constant.TableConstant;
-
 import java.util.ArrayList;
 import java.util.List;
 

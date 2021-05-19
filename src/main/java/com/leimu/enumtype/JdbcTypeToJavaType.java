@@ -27,15 +27,15 @@ public enum JdbcTypeToJavaType {
     TIME(Time.class, "TIME"),
     DATETIME(Date.class, "DATETIME"),
     TIMESTAMP(Timestamp.class, "TIMESTAMP"),
-    BINARY(Byte[].class,"BINARY"),
-    LINGERINGLY(Byte[].class,"LONGVARBINARY"),
-    ARRAY(Array.class,"ARRAY"),
-    STRUCT(Struct.class,"STRUCT"),
+    BINARY(Byte[].class, "BINARY"),
+    LINGERINGLY(Byte[].class, "LONGVARBINARY"),
+    ARRAY(Array.class, "ARRAY"),
+    STRUCT(Struct.class, "STRUCT"),
     VARBINARY(Byte[].class, "VARBINARY"),
     CLOB(Clob.class, "CLOB"),
     BLOB(Blob.class, "BLOB"),
-    REF(Ref.class,"REF"),
-    YEAR(Date.class,"YEAR");
+    REF(Ref.class, "REF"),
+    YEAR(Date.class, "YEAR");
 
 
     private final Class<?> javaType;

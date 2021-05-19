@@ -27,7 +27,6 @@ public class JDBCUtils {
     }
 
     /**
-     *
      * @return 获取数据库类型
      */
     public static String getDatabaseType() {
@@ -70,15 +69,16 @@ public class JDBCUtils {
             tableDetail.setTableName(tables.getString("TABLE_NAME"));
             tableDetail.setTableType(tables.getString("TABLE_TYPE"));
             tableConstant.addTableDetailsInThis(tableDetail);
-            logger.info("读取表："+tableDetail.getTableName()+"，类型为："+tableDetail.getTableType());
+            logger.info("读取表：" + tableDetail.getTableName() + "，类型为：" + tableDetail.getTableType());
         }
         return tableConstant;
     }
 
     /**
      * 获取数据表的所有字段信息
+     *
      * @param tableConstant 存放所有存储数据的容器
-     * @param type 表示数据库类型
+     * @param type          表示数据库类型
      * @return 返回表的详细数据
      * @throws Exception 抛出异常
      */

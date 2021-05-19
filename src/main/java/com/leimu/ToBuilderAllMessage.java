@@ -11,7 +11,6 @@ import com.leimu.utils.StringUtils;
 import com.leimu.utils.ToGeneratorBaseMessageUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Objects;
 
 public class ToBuilderAllMessage {
@@ -41,11 +40,11 @@ public class ToBuilderAllMessage {
             ReadXmlFileToConfig.createDocument(this.configXmlPath);
             this.fileBuilderOfConfig = ReadXmlFileToConfig.getConfigByDocument();
             //处理路径
-            String path = System.getProperty("user.dir")+ File.separator+ (fileBuilderOfConfig.getOutputFilePath().trim().startsWith("/")?
-                    (fileBuilderOfConfig.getOutputFilePath().substring(1)):fileBuilderOfConfig.getOutputFilePath());
+            String path = System.getProperty("user.dir") + File.separator + (fileBuilderOfConfig.getOutputFilePath().trim().startsWith("/") ?
+                    (fileBuilderOfConfig.getOutputFilePath().substring(1)) : fileBuilderOfConfig.getOutputFilePath());
             File file = new File(path);
             //是文件夹，并且不存在 则创建
-            if (file.isDirectory() && !file.exists()){
+            if (file.isDirectory() && !file.exists()) {
                 file.mkdirs();
             }
             fileBuilderOfConfig.setOutputFilePath(path);
@@ -60,7 +59,7 @@ public class ToBuilderAllMessage {
         //将需要生成的信息放入hashmap
         String content = ToGeneratorBaseMessageUtils.toGeneratorBaseMessage(fileBuilderOfConfig);
         //开始生成文件
-        GeneratorFileToTargetPath.toGenerator(tableConstant,fileBuilderOfConfig,content);
+        GeneratorFileToTargetPath.toGenerator(tableConstant, fileBuilderOfConfig, content);
     }
 
 }

@@ -4,12 +4,13 @@
 
     <outputFilePath>src/main/java</outputFilePath>
 
-    <basePackage>com.leimu</basePackage>
+    <basePackage>com.leimu.test</basePackage>
 
     <author>Me</author>
 
 
-    <jarLocation>D:\BaiduNetdiskDownload\mavenData\mysql\mysql-connector-java\8.0.21\mysql-connector-java-8.0.21.jar</jarLocation>
+    <jarLocation>D:\BaiduNetdiskDownload\mavenData\mysql\mysql-connector-java\8.0.21\mysql-connector-java-8.0.21.jar
+    </jarLocation>
 
     <databaseSource>
         <connection>jdbc:mysql://127.0.0.1:3306/test?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;eroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</connection>

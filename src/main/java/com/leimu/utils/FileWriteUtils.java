@@ -7,17 +7,17 @@ public class FileWriteUtils {
 
     public static String outputPath;
 
-    public static void setOutputPath(String path,String fileName){
+    public static void setOutputPath(String path, String fileName) {
         outputPath = (path + File.separator + fileName);
     }
 
-    public static String createPath(String path,String basePackage){
-        if (basePackage.contains(".")){
+    public static String createPath(String path, String basePackage) {
+        if (basePackage.contains(".")) {
             basePackage = basePackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator));
         }
         path = path + File.separator + basePackage;
         File file = new File(path);
-        if (!file.exists()){
+        if (!file.exists()) {
             file.mkdirs();
         }
         return file.getAbsolutePath();
@@ -25,7 +25,7 @@ public class FileWriteUtils {
 
     public static BufferedWriter getWrite() throws IOException {
         File file = new File(outputPath);
-        if (file.exists()){
+        if (file.exists()) {
             file.delete();
         }
         file.createNewFile();
@@ -35,6 +35,7 @@ public class FileWriteUtils {
 
     /**
      * 将整块内容写入文件
+     *
      * @param content 需要被写入的内容
      */
     public static void toWriteFile(String content) throws IOException {
@@ -43,7 +44,7 @@ public class FileWriteUtils {
         write.close();
     }
 
-    public static void toWriteLineContentInFile(BufferedWriter writer,String lineContent) throws IOException {
+    public static void toWriteLineContentInFile(BufferedWriter writer, String lineContent) throws IOException {
         writer.write(lineContent);
         writer.newLine();
         writer.newLine();

@@ -97,7 +97,7 @@ public class testLoadJarUtils {
      * 测试数据库与类型是否对应
      */
     @Test
-    public void testJdbcTypeToJava(){
+    public void testJdbcTypeToJava() {
         ConnectionConfig.jdbcConnection = "jdbc:mysql://127.0.0.1:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true";
         ConnectionConfig.JdbcDriver = "com.mysql.cj.jdbc.Driver";
         ConnectionConfig.username = "root";

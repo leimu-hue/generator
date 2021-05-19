@@ -70,15 +70,21 @@ public class ReadXmlFileToConfig {
             Node willHandlerNode = childNodes.item(index);
             if (Constant.author.
                     equalsIgnoreCase(willHandlerNode.getNodeName())) {
-                fileBuilderOfConfig.setAuthor(willHandlerNode.getTextContent());
+                fileBuilderOfConfig.setAuthor(
+                        StringUtils.toHandlerContent(willHandlerNode.getTextContent())
+                );
             } else if (Constant.outputFilePath.equalsIgnoreCase(willHandlerNode.getNodeName())) {
-                fileBuilderOfConfig.setOutputFilePath(willHandlerNode.getTextContent());
+                fileBuilderOfConfig.setOutputFilePath(
+                        StringUtils.toHandlerContent(willHandlerNode.getTextContent())
+                );
             } else if (Constant.jarLocation.equalsIgnoreCase(willHandlerNode.getNodeName())) {
-                ConnectionConfig.jarLocation = willHandlerNode.getTextContent();
+                ConnectionConfig.jarLocation = StringUtils.toHandlerContent(willHandlerNode.getTextContent());
             } else if (Constant.databaseSource.equalsIgnoreCase(willHandlerNode.getNodeName())) {
                 ReadXmlFileToConfig.databaseSource = willHandlerNode;
-            } else if (Constant.basePackage.equalsIgnoreCase(willHandlerNode.getNodeName())){
-                fileBuilderOfConfig.setBasePackage(willHandlerNode.getTextContent().trim());
+            } else if (Constant.basePackage.equalsIgnoreCase(willHandlerNode.getNodeName())) {
+                fileBuilderOfConfig.setBasePackage(
+                        StringUtils.toHandlerContent(willHandlerNode.getTextContent().trim())
+                );
             }
         }
         if (StringUtils.isEmpty(fileBuilderOfConfig.getOutputFilePath())) {
@@ -103,22 +109,22 @@ public class ReadXmlFileToConfig {
                 if (StringUtils.isEmpty(ConnectionConfig.JdbcDriver)) {
                     val++;
                 }
-                ConnectionConfig.JdbcDriver = willHandlerNode.getTextContent();
+                ConnectionConfig.JdbcDriver = StringUtils.toHandlerContent(willHandlerNode.getTextContent());
             } else if (Constant.jdbcConnection.equalsIgnoreCase(willHandlerNode.getNodeName())) {
                 if (StringUtils.isEmpty(ConnectionConfig.jdbcConnection)) {
                     val++;
                 }
-                ConnectionConfig.jdbcConnection = willHandlerNode.getTextContent();
+                ConnectionConfig.jdbcConnection = StringUtils.toHandlerContent(willHandlerNode.getTextContent());
             } else if (Constant.username.equalsIgnoreCase(willHandlerNode.getNodeName())) {
                 if (StringUtils.isEmpty(ConnectionConfig.username)) {
                     val++;
                 }
-                ConnectionConfig.username = willHandlerNode.getTextContent();
+                ConnectionConfig.username = StringUtils.toHandlerContent(willHandlerNode.getTextContent());
             } else if (Constant.password.equalsIgnoreCase(willHandlerNode.getNodeName())) {
                 if (StringUtils.isEmpty(ConnectionConfig.password)) {
                     val++;
                 }
-                ConnectionConfig.password = willHandlerNode.getTextContent();
+                ConnectionConfig.password = StringUtils.toHandlerContent(willHandlerNode.getTextContent());
             }
         }
         if (val != 4) {

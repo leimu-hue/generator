@@ -9,7 +9,7 @@ import java.net.URL;
 public class GeneratorTest {
 
     @Test
-    public void generator()throws Exception{
+    public void generator() throws Exception {
         File file = null;
         try {
             URL resource = getClass().getClassLoader().getResource("connectionConfig.xml");
